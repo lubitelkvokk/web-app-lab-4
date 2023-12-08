@@ -5,6 +5,8 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.transaction.Transaction;
 import jakarta.transaction.Transactional;
 import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
@@ -25,13 +27,20 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 
     @Override
-    @Transactional
+
     public boolean registerUser(UserEntity user) {
-        UserEntity userEntity = entityManager.merge(user);
-        userEntity.setLogin("UNKNOWNABOBA");
-        System.out.println(userEntity.getLogin() + " " + userEntity.getPassword());
-        return true;
+        try{
+            EntityTransaction transaction = entityManager.getTransaction();
+            transaction.begin();
+            entityManager.persist(user);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace(); // или замените на логирование
+            return false;
+        }
     }
+
 
     @Override
     public UserEntity findUser(UserEntity user) {
