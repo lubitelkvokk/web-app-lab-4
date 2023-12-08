@@ -6,6 +6,7 @@ import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.UserException;
 import se.ifmo.ru.webapplab4.services.UserService;
@@ -27,22 +28,22 @@ public class UserResource implements Serializable {
 
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
-    public String hello(UserEntity user) throws UserException {
+    public Response hello(UserEntity user) throws UserException {
         System.out.println(user.getLogin() + " " + user.getPassword());
         userService.registerUser(user);
-        return "Hello, World!";
+        return Response.ok("Succesfully registration").build();
     }
 
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public String authenticate(UserEntity user) throws UserException {
+    public Response authenticate(UserEntity user) throws UserException {
         // Логика аутентификации пользователя
         boolean isAuthenticated = userService.authenticateUser(user);
         if (isAuthenticated) {
-            return "Authentication successful!";
+            return Response.ok("Authentication successful!").build();
         } else {
-            return "Authentication failed!";
+            return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
