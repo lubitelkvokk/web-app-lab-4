@@ -8,25 +8,40 @@ import jakarta.inject.Named;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.io.Serializable;
+
 @Named
 @ApplicationScoped
-public class EntityManagerFactoryBean {
+public class EntityManagerFactoryBean{
 
     private EntityManagerFactory entityManagerFactory;
 
     public EntityManagerFactory getEntityManagerFactory() {
+        try {
+            if (entityManagerFactory == null || !entityManagerFactory.isOpen()) {
+                entityManagerFactory = Persistence.createEntityManagerFactory("default");
+                System.out.println("EntityManagerFactory was constructed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return entityManagerFactory;
     }
 
-    @PostConstruct
-    public void init(){
-        System.out.println("EntityManagerFactory was constructed");
-        entityManagerFactory = Persistence.createEntityManagerFactory("default");
-    }
+
+//    @PostConstruct
+//    public void init(){
+//
+//    }
 
     @PreDestroy
     public void destroy(){
-        entityManagerFactory.close();
+        if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
+            entityManagerFactory.close();
+            System.out.println("EntityManagerFactory was closed");
+        }
     }
+
 
 }

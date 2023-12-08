@@ -6,6 +6,7 @@ import jakarta.inject.Named;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.UserException;
 import se.ifmo.ru.webapplab4.implDao.UserDaoImpl;
+import se.ifmo.ru.webapplab4.util.PasswordInteraction;
 import se.ifmo.ru.webapplab4.util.validation.UserValidation;
 
 @Named
@@ -18,15 +19,25 @@ public class UserService {
     @Inject
     UserValidation userValidation;
 
+    @Inject
+    PasswordInteraction passwordInteraction;
+
     public void registerUser(UserEntity user) throws UserException {
         userValidation.validateUser(user);
         // TODO need to do hashing a password to token
-        user.setToken(user.getPassword());
+        user.setId(0);
+        user.setToken(passwordInteraction.hashPassword(user.getPassword()));
         userDaoImpl.registerUser(user);
         // TODO AU DODIK VERNI NORMALNO
     }
 
-    public UserEntity findUser(){
+    public boolean authenticateUser(UserEntity user) {
+        UserEntity verifiedUser = userDaoImpl.findUserByLogin(user.getLogin());
+        // TODO comparing hashes
+        return passwordInteraction.verifyPassword(user.getPassword(), verifiedUser.getToken());
+    }
+
+    public UserEntity findUser() {
         return new UserEntity();
     }
 

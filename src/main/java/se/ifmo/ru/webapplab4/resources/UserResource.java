@@ -4,10 +4,7 @@ import jakarta.annotation.PostConstruct;
 
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.UserException;
@@ -23,12 +20,12 @@ public class UserResource implements Serializable {
     private UserService userService;
 
     @GET
-    public String findUser(){
+    public String findUser() {
         userService.findUser();
         return "while we don't find such user";
     }
 
-    @POST
+    @PUT
     @Produces(MediaType.APPLICATION_JSON)
     public String hello(UserEntity user) throws UserException {
         System.out.println(user.getLogin() + " " + user.getPassword());
@@ -36,6 +33,18 @@ public class UserResource implements Serializable {
         return "Hello, World!";
     }
 
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    public String authenticate(UserEntity user) throws UserException {
+        // Логика аутентификации пользователя
+        boolean isAuthenticated = userService.authenticateUser(user);
+        if (isAuthenticated) {
+            return "Authentication successful!";
+        } else {
+            return "Authentication failed!";
+        }
+    }
 
     @PostConstruct
     public void logging() {
