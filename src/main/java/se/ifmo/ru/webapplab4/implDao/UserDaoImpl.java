@@ -5,11 +5,13 @@ import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
-import jakarta.persistence.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceException;
 import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.LoginException;
-import se.ifmo.ru.webapplab4.exception.UserException;
 import se.ifmo.ru.webapplab4.util.EntityManagerFactoryBean;
 
 import java.io.Serializable;
@@ -66,6 +68,7 @@ public class UserDaoImpl implements UserDao, Serializable {
 
     @PreDestroy
     public void destroy() {
+
         entityManager.close();
     }
 }

@@ -9,6 +9,8 @@ import se.ifmo.ru.webapplab4.implDao.UserDaoImpl;
 import se.ifmo.ru.webapplab4.util.PasswordInteraction;
 import se.ifmo.ru.webapplab4.util.validation.UserValidation;
 
+import java.io.Serializable;
+
 @Named
 @RequestScoped
 public class UserService {
