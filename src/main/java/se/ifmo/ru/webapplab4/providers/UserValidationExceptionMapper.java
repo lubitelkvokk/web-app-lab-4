@@ -10,7 +10,7 @@ import se.ifmo.ru.webapplab4.exception.UserException;
 public class UserValidationExceptionMapper implements ExceptionMapper<UserException> {
     @Override
     public Response toResponse(UserException e) {
-        return Response.status(Response.Status.BAD_REQUEST)
+        return Response.status(Response.Status.NOT_FOUND)
                 .entity("User data validation failed: " + e.getMessage())
                 .build();
     }

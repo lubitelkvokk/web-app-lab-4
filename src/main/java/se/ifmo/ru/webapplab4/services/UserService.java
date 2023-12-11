@@ -3,7 +3,11 @@ package se.ifmo.ru.webapplab4.services;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
+import se.ifmo.ru.webapplab4.exception.LoginException;
+import se.ifmo.ru.webapplab4.exception.PasswordException;
 import se.ifmo.ru.webapplab4.exception.UserException;
 import se.ifmo.ru.webapplab4.implDao.UserDaoImpl;
 import se.ifmo.ru.webapplab4.util.PasswordInteraction;
@@ -26,17 +30,25 @@ public class UserService {
 
     public void registerUser(UserEntity user) throws UserException {
         userValidation.validateUser(user);
-        // TODO need to do hashing a password to token
-        user.setId(0);
-        user.setToken(passwordInteraction.hashPassword(user.getPassword()));
-        userDaoImpl.registerUser(user);
-        // TODO AU DODIK VERNI NORMALNO
+        try{
+            userDaoImpl.findUserByLogin(user.getLogin());
+            throw new LoginException("This login is already taken.");
+        } catch (NoResultException e) {
+            user.setId(0);
+            user.setToken(passwordInteraction.hashPassword(user.getPassword()));
+            userDaoImpl.registerUser(user);
+        }
     }
 
-    public boolean authenticateUser(UserEntity user) {
-        UserEntity verifiedUser = userDaoImpl.findUserByLogin(user.getLogin());
-        // TODO comparing hashes
-        return passwordInteraction.verifyPassword(user.getPassword(), verifiedUser.getToken());
+    public boolean authenticateUser(UserEntity user) throws UserException {
+        userValidation.validateUser(user);
+        try{
+            UserEntity verifiedUser = userDaoImpl.findUserByLogin(user.getLogin());
+            return passwordInteraction.verifyPassword(user.getPassword(), verifiedUser.getToken());
+        } catch (NoResultException e) {
+            throw new LoginException("There isn't such user");
+        }
+
     }
 
     public UserEntity findUser() {

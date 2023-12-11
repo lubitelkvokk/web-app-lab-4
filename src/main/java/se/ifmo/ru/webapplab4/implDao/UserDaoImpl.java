@@ -29,12 +29,8 @@ public class UserDaoImpl implements UserDao, Serializable {
 
 
     @Override
-    public boolean registerUser(UserEntity user) throws LoginException {
-
+    public boolean registerUser(UserEntity user) {
         try {
-            findUserByLogin(user.getLogin());
-            throw new LoginException("This login is already taken.");
-        } catch (NoResultException e) {
             EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
             entityManager.persist(user);
