@@ -16,22 +16,21 @@ import se.ifmo.ru.webapplab4.util.JwtManager;
 import java.io.IOException;
 
 @Provider
-@Priority(Priorities.AUTHENTICATION)
+@Priority(Priorities.AUTHORIZATION)
 public class JwtFilter implements ContainerRequestFilter, ContainerResponseFilter {
 
     @Inject
     private JwtManager jwtManager;
 
-
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
         // Проверяем путь запроса
         System.out.println(requestContext.getUriInfo().getPath());
-        System.out.println(requestContext.getMethod());
         if ("user".equals(requestContext.getUriInfo().getPath())
-                && (requestContext.getMethod().equals("POST") || (requestContext.getMethod().equals("PUT")))) {
+                && (requestContext.getMethod().equals("POST")
+                || (requestContext.getMethod().equals("PUT")
+                || (requestContext.getMethod().equals("OPTIONS"))))) {
             // if it is authentication or registration we skip verifying token
-            return;
         } else {
             if (!jwtManager.verifyToken(requestContext.getHeaderString("Authorization"))) {
                 requestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)

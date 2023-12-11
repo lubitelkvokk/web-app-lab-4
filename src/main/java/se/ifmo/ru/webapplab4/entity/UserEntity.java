@@ -1,11 +1,13 @@
 package se.ifmo.ru.webapplab4.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Collection;
 
 @Entity
 @Table(name = "user", schema = "public", catalog = "true_notes_db")
+@Data
 public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,43 +24,12 @@ public class UserEntity {
 
     @Transient
     private String password;
-    @OneToMany(mappedBy = "userByUserId")
-    private Collection<HitEntity> hitsById;
+//    @OneToMany(mappedBy = "userByUserId")
+//    private Collection<HitEntity> hitsById;
 
     public UserEntity() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -81,11 +52,4 @@ public class UserEntity {
         return result;
     }
 
-    public Collection<HitEntity> getHitsById() {
-        return hitsById;
-    }
-
-    public void setHitsById(Collection<HitEntity> hitsById) {
-        this.hitsById = hitsById;
-    }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface HitDao {
 
-    List<HitEntity> getUserHits(UserEntity user);
+    List<HitEntity> getUserHits(String username, Integer page_number, Integer page_size);
 
     void addHit(HitEntity hit);
 

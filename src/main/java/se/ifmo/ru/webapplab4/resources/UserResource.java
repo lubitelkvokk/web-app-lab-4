@@ -26,10 +26,12 @@ public class UserResource implements Serializable {
     @Inject
     private JwtManager jwtManager;
 
-    @GET
-    public String findUser() {
-        userService.findUser();
 
+    @Deprecated
+    @GET
+    public String findUser(@HeaderParam("Authorization") String authToken) {
+        System.out.println(authToken);
+        userService.findUser();
         return "while we don't find such user";
     }
 

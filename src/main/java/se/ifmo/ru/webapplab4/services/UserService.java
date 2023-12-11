@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.NoResultException;
+import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.LoginException;
 import se.ifmo.ru.webapplab4.exception.PasswordException;
@@ -20,7 +21,7 @@ import java.io.Serializable;
 public class UserService {
 
     @Inject
-    UserDaoImpl userDaoImpl;
+    UserDao userDaoImpl;
 
     @Inject
     UserValidation userValidation;

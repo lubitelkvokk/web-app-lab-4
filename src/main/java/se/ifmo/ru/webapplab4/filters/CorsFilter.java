@@ -1,6 +1,8 @@
 package se.ifmo.ru.webapplab4.filters;
 
 
+import jakarta.annotation.Priority;
+import jakarta.ws.rs.Priorities;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.container.ContainerResponseContext;
 import jakarta.ws.rs.container.ContainerResponseFilter;
@@ -10,6 +12,7 @@ import jakarta.ws.rs.ext.Provider;
 import java.io.IOException;
 
 @Provider
+@Priority(Priorities.AUTHENTICATION)
 public class CorsFilter implements ContainerResponseFilter {
 
     @Override
@@ -24,5 +27,6 @@ public class CorsFilter implements ContainerResponseFilter {
 
         // Разрешить использование куки и аутентификацию (если необходимо)
         headers.add("Access-Control-Allow-Credentials", "true");
+
     }
 }
