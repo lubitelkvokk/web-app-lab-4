@@ -23,7 +23,7 @@ public class CorsFilter implements ContainerResponseFilter {
         // Разрешить запросы от всех доменов (замените "*" на конкретные домены при необходимости)
         headers.add("Access-Control-Allow-Origin", "*");
         headers.add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        headers.add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        headers.add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
         // Разрешить использование куки и аутентификацию (если необходимо)
         headers.add("Access-Control-Allow-Credentials", "true");

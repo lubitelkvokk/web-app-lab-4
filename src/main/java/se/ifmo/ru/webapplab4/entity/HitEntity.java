@@ -28,9 +28,11 @@ public class HitEntity {
     @Basic
     @Column(name = "hitting")
     private Boolean hitting;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", referencedColumnName = "id")
     private UserEntity userByUserId;
+
+
 
     @Override
     public boolean equals(Object o) {

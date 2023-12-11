@@ -26,10 +26,14 @@ public class JwtFilter implements ContainerRequestFilter, ContainerResponseFilte
     public void filter(ContainerRequestContext requestContext) throws IOException {
         // Проверяем путь запроса
         System.out.println(requestContext.getUriInfo().getPath());
+        System.out.println(requestContext.getMethod());
+        if ((requestContext.getMethod().equals("OPTIONS"))) {
+            return;
+        }
+
         if ("user".equals(requestContext.getUriInfo().getPath())
                 && (requestContext.getMethod().equals("POST")
-                || (requestContext.getMethod().equals("PUT")
-                || (requestContext.getMethod().equals("OPTIONS"))))) {
+                || (requestContext.getMethod().equals("PUT")))) {
             // if it is authentication or registration we skip verifying token
         } else {
             if (!jwtManager.verifyToken(requestContext.getHeaderString("Authorization"))) {
