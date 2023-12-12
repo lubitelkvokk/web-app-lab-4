@@ -2,7 +2,7 @@ package se.ifmo.ru.webapplab4.entity;
 
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Data
 public class HitProjection {

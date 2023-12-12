@@ -3,7 +3,7 @@ package se.ifmo.ru.webapplab4.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = "hit", schema = "public", catalog = "true_notes_db")
