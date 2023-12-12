@@ -5,6 +5,7 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.NoResultException;
 import jakarta.ws.rs.core.Response;
+import org.hibernate.exception.ConstraintViolationException;
 import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.LoginException;
@@ -37,11 +38,11 @@ public class UserService {
     public void registerUser(UserModel user) throws UserException {
         userValidation.validateUser(user);
         try {
-            userDaoImpl.findUserByLogin(user.getLogin());
-            throw new LoginException("This login is already taken.");
-        } catch (NoResultException e) {
             userDaoImpl.registerUser(userConverter.convertUserModelToEntity(user));
+        } catch (ConstraintViolationException e){
+            throw new UserException("The login is already taken.");
         }
+
     }
 
     public Response authenticateUser(UserModel user) throws UserException {

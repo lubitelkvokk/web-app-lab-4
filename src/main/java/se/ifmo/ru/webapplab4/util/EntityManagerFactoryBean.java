@@ -22,11 +22,8 @@ public class EntityManagerFactoryBean{
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return entityManagerFactory;
     }
-
-
 
     @PreDestroy
     public void destroy(){

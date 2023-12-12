@@ -27,17 +27,11 @@ public class UserDaoImpl implements UserDao, Serializable {
 
     @Override
     public boolean registerUser(UserEntity user) {
-        try {
-            EntityTransaction transaction = entityManager.getTransaction();
-            transaction.begin();
-            entityManager.persist(user);
-            transaction.commit();
-            return true;
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-            return false;
-        }
-
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.persist(user);
+        transaction.commit();
+        return true;
     }
 
 

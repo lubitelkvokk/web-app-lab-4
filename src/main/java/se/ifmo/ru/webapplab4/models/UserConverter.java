@@ -17,7 +17,6 @@ public class UserConverter {
         UserEntity userEntity = new UserEntity();
         userEntity.setLogin(userModel.getLogin());
         userEntity.setToken(passwordInteraction.hashPassword(userModel.getPassword()));
-
         return userEntity;
     }
 
