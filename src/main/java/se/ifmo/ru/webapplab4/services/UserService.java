@@ -4,10 +4,14 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.NoResultException;
+import jakarta.ws.rs.core.Response;
 import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.LoginException;
 import se.ifmo.ru.webapplab4.exception.UserException;
+import se.ifmo.ru.webapplab4.models.UserConverter;
+import se.ifmo.ru.webapplab4.models.UserModel;
+import se.ifmo.ru.webapplab4.util.JwtManager;
 import se.ifmo.ru.webapplab4.util.PasswordInteraction;
 import se.ifmo.ru.webapplab4.util.validation.UserValidation;
 
@@ -22,33 +26,41 @@ public class UserService {
     UserValidation userValidation;
 
     @Inject
-    PasswordInteraction passwordInteraction;
+    private PasswordInteraction passwordInteraction;
 
-    public void registerUser(UserEntity user) throws UserException {
+    @Inject
+    UserConverter userConverter;
+
+    @Inject
+    private JwtManager jwtManager;
+
+    public void registerUser(UserModel user) throws UserException {
         userValidation.validateUser(user);
-        try{
+        try {
             userDaoImpl.findUserByLogin(user.getLogin());
             throw new LoginException("This login is already taken.");
         } catch (NoResultException e) {
-            user.setId(0);
-            user.setToken(passwordInteraction.hashPassword(user.getPassword()));
-            userDaoImpl.registerUser(user);
+            userDaoImpl.registerUser(userConverter.convertUserModelToEntity(user));
         }
     }
 
-    public boolean authenticateUser(UserEntity user) throws UserException {
+    public Response authenticateUser(UserModel user) throws UserException {
         userValidation.validateUser(user);
-        try{
+        try {
             UserEntity verifiedUser = userDaoImpl.findUserByLogin(user.getLogin());
-            return passwordInteraction.verifyPassword(user.getPassword(), verifiedUser.getToken());
+            if (passwordInteraction.verifyPassword(user.getPassword(), verifiedUser.getToken())) {
+                return Response.ok(jwtManager.createToken(user.getLogin()))
+                        .build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND)
+                        .entity("Wrong password")
+                        .build();
+            }
         } catch (NoResultException e) {
             throw new LoginException("There isn't such user");
         }
 
     }
 
-    public UserEntity findUser() {
-        return new UserEntity();
-    }
 
 }

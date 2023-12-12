@@ -25,7 +25,6 @@ public class UserDaoImpl implements UserDao, Serializable {
         entityManager = emfb.getEntityManagerFactory().createEntityManager();
     }
 
-
     @Override
     public boolean registerUser(UserEntity user) {
         try {

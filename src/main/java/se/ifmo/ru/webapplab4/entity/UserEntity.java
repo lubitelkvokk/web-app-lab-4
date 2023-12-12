@@ -18,12 +18,10 @@ public class UserEntity {
     @Column(name = "token")
     private String token;
 
-
-
     @Transient
     private String password;
 //    @OneToMany(mappedBy = "userByUserId")
-//    private Collection<HitEntity> hitsById;
+//    private Collection<HitModel> hitsById;
 
     public UserEntity() {
     }

@@ -8,6 +8,8 @@ import se.ifmo.ru.webapplab4.dao.HitDao;
 import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.HitEntity;
 import se.ifmo.ru.webapplab4.exception.HitBoundaryException;
+import se.ifmo.ru.webapplab4.models.HitConverter;
+import se.ifmo.ru.webapplab4.models.HitModel;
 
 import java.util.List;
 
@@ -22,20 +24,25 @@ public class HitService {
     @Inject
     private UserDao userDaoImpl;
 
+    @Inject
+    private HitConverter hitConverter;
+
+
     public List<HitEntity> getUserHits(String username, Integer pageNumber, Integer pageSize) {
         return hitDaoImpl.getUserHits(username, pageNumber, pageSize);
     }
 
-    public void addHitForUser(String username, HitEntity hitEntity) throws HitBoundaryException {
-        hitEntity.setHitting(isHitting(hitEntity));
-        hitEntity.setUserByUserId(userDaoImpl.findUserByLogin(username));
-        hitDaoImpl.addHit(hitEntity);
+    public void addHitForUser(String username, HitModel hitModel) throws HitBoundaryException {
+        HitEntity hit = hitConverter.convertHitModelToEntity(hitModel);
+        hit.setHitting(isHitting(hitModel));
+        hit.setUserByUserId(userDaoImpl.findUserByLogin(username));
+        hitDaoImpl.addHit(hit);
     }
 
-    private boolean isHitting(HitEntity hitEntity) throws HitBoundaryException {
-        Double x = hitEntity.getX();
-        Double y = hitEntity.getY();
-        Double r = hitEntity.getR();
+    private boolean isHitting(HitModel hitModel) throws HitBoundaryException {
+        Double x = hitModel.getX();
+        Double y = hitModel.getY();
+        Double r = hitModel.getR();
 
         if (x < -3 || x > 5) {
             throw new HitBoundaryException("value X must be between -3 and 5");
