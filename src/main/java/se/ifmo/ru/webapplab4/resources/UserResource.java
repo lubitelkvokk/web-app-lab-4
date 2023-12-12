@@ -1,14 +1,11 @@
 package se.ifmo.ru.webapplab4.resources;
 
 import jakarta.annotation.PostConstruct;
-
-import jakarta.annotation.security.PermitAll;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.StreamingOutput;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
 import se.ifmo.ru.webapplab4.exception.UserException;
 import se.ifmo.ru.webapplab4.services.UserService;

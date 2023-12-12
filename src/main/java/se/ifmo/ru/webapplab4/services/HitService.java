@@ -9,7 +9,6 @@ import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.HitEntity;
 import se.ifmo.ru.webapplab4.exception.HitBoundaryException;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Named
@@ -38,10 +37,6 @@ public class HitService {
         Double y = hitEntity.getY();
         Double r = hitEntity.getR();
 
-        System.out.println("X VALUE: " + x);
-        System.out.println("Y VALUE: " + y);
-        System.out.println("R VALUE: " + r);
-        System.out.println(x < -3 || x > 5);
         if (x < -3 || x > 5) {
             throw new HitBoundaryException("value X must be between -3 and 5");
         } else if (y < -5 || y > 3) {

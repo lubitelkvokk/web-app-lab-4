@@ -11,7 +11,6 @@ import se.ifmo.ru.webapplab4.dao.HitDao;
 import se.ifmo.ru.webapplab4.entity.HitEntity;
 import se.ifmo.ru.webapplab4.util.EntityManagerFactoryBean;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Named

@@ -3,8 +3,6 @@ package se.ifmo.ru.webapplab4.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Collection;
-
 @Entity
 @Table(name = "user", schema = "public", catalog = "true_notes_db")
 @Data

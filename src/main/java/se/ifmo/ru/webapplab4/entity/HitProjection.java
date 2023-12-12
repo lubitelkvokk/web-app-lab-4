@@ -1,6 +1,5 @@
 package se.ifmo.ru.webapplab4.entity;
 
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;

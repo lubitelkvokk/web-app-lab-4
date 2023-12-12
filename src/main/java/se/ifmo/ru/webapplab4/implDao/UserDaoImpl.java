@@ -7,11 +7,9 @@ import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceException;
 import se.ifmo.ru.webapplab4.dao.UserDao;
 import se.ifmo.ru.webapplab4.entity.UserEntity;
-import se.ifmo.ru.webapplab4.exception.LoginException;
 import se.ifmo.ru.webapplab4.util.EntityManagerFactoryBean;
 
 import java.io.Serializable;

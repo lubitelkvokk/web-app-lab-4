@@ -14,9 +14,8 @@ import java.util.Date;
 public class JwtManager {
 
     // TODO put into config file or environment variable
-        private final String SECRET_KEY = "HI23knNfi29dMNTobGabfFaccident"; // Замените на ваш секретный ключ
+        private final String SECRET_KEY = "HI23knNfi29dMNTobGabfFaccident";
 
-        // Метод для создания JWT токена
         public String createToken(String subject) {
             Date now = new Date();
             Date expirationDate = new Date(now.getTime() + 3600000); // Токен будет действителен 1 час
@@ -29,17 +28,15 @@ public class JwtManager {
                     .compact();
         }
 
-        // Метод для верификации JWT токена
         public boolean verifyToken(String token) {
             try {
                 Jws<Claims> claimsJws = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
-                return true; // Подпись верна и токен не истек
+                return true;
             } catch (Exception e) {
-                return false; // Ошибка при верификации токена
+                return false;
             }
         }
 
-        // Метод для извлечения данных из JWT токена
         public String extractSubject(String token) {
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
             return claims.getSubject();
