@@ -28,8 +28,6 @@ public class HitResource implements Serializable {
     @Inject
     private GsonProvider gsonProvider;
 
-
-    // TODO вынести логику помещения Authorization token в запрос
     @GET
     public Response getUserHits(@HeaderParam("Authorization") String authToken,
                                 @QueryParam("pageNumber") Integer pageNumber,
@@ -41,8 +39,7 @@ public class HitResource implements Serializable {
     @PUT
     public Response addHit(@HeaderParam("Authorization") String authToken,
                            HitModel hitModel) throws HitBoundaryException {
-        hitService.addHitForUser(jwtManager.extractSubject(authToken), hitModel);
-        return Response.ok().build();
+        return Response.ok(hitService.addHitForUser(jwtManager.extractSubject(authToken), hitModel)).build();
     }
 
 }

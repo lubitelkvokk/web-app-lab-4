@@ -32,11 +32,13 @@ public class HitService {
         return hitDaoImpl.getUserHits(username, pageNumber, pageSize);
     }
 
-    public void addHitForUser(String username, HitModel hitModel) throws HitBoundaryException {
+    public boolean addHitForUser(String username, HitModel hitModel) throws HitBoundaryException {
         HitEntity hit = hitConverter.convertHitModelToEntity(hitModel);
-        hit.setHitting(isHitting(hitModel));
+        boolean isHit = isHitting(hitModel);
+        hit.setHitting(isHit);
         hit.setUserByUserId(userDaoImpl.findUserByLogin(username));
         hitDaoImpl.addHit(hit);
+        return isHit;
     }
 
     private boolean isHitting(HitModel hitModel) throws HitBoundaryException {
