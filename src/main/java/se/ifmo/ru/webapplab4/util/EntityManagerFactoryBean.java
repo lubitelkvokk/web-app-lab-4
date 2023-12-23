@@ -13,7 +13,7 @@ public class EntityManagerFactoryBean{
 
     private EntityManagerFactory entityManagerFactory;
 
-    public EntityManagerFactory getEntityManagerFactory() {
+    public  EntityManagerFactory getEntityManagerFactory() {
         try {
             if (entityManagerFactory == null || !entityManagerFactory.isOpen()) {
                 entityManagerFactory = Persistence.createEntityManagerFactory("default");

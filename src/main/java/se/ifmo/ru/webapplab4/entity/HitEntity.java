@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "hit", schema = "public", catalog = "true_notes_db")
+@Table(name = "\"hit\"")
 @Data
 public class HitEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

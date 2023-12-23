@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "user", schema = "public", catalog = "true_notes_db")
+@Table(name = "\"user\"")
 @Data
 public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

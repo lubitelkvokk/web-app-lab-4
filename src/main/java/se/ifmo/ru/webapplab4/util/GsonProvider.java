@@ -2,7 +2,6 @@ package se.ifmo.ru.webapplab4.util;
 
 import com.google.gson.Gson;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
 
 @ApplicationScoped
 public class GsonProvider {

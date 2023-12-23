@@ -19,6 +19,8 @@
 
     <dependencies>
 
+
+
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -42,7 +44,6 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version>
         </dependency>
-
 
 
         <dependency>
@@ -161,6 +162,34 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.2</version>
             </plugin>
+
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-assembly-plugin</artifactId>-->
+<!--                <version>3.3.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>make-assembly</id>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>single</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <archive>-->
+<!--                                <manifest>-->
+<!--                                    <mainClass>se.ifmo.ru.webapplab4.HelloApplication</mainClass>-->
+<!--                                </manifest>-->
+<!--                            </archive>-->
+
+<!--                            <descriptorRefs>-->
+<!--                                <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--                            </descriptorRefs>-->
+<!--                            <appendAssemblyId>false</appendAssemblyId>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
